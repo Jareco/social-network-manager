@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Managers</title>
+</head>
+
+<body>
+    <div id="app">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="index.html">Home</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="networks.html">Social Network</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="users.html">User</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="profiles.html">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="workers.html">Worker</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="developers.html">Developer <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="managers.html">Manager <span class="sr-only">(current)</span></a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <main>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <h1>Managers</h1>
+                </div>
+                <div class="row">
+                    <table class="table table-dark" style="overflow-y:scroll; height: 400px;">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Manager Number</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Telephone number</th>
+                                <th scope="col">Personal Number</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(manager, index) in managers">
+                                <th scope="row">{{ index + 1 }}</th>
+                                <td>{{ manager.managernr }}</td>
+                                <td>{{ manager.emailM }}</td>
+                                <td>{{ manager.telnumberM }}</td>
+                                <td>{{ manager.pernr }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        Add and delete a Social network:
+                        <input type="text" class="form-control" id="exampleInput1"
+                            placeholder="Manager Number (also use to delete)" v-model="manager.managernr">
+                        <input type="text" class="form-control" id="exampleInput2" placeholder="Email"
+                            v-model="manager.emailM">
+                        <input type="text" class="form-control" id="exampleInput3" placeholder="Telephone Number"
+                            v-model="manager.telnumberM">
+                        <input type="text" class="form-control" id="exampleInput5" placeholder="Personal Number"
+                            v-model="manager.pernr">
+                        <button class="btn btn-secondary float-right" v-on:click="addNewManager">Add</button>
+                        <button class="btn btn-outline-danger float-left" v-on:click="deleteManager">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+
+        </footer>
+
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+</body>
+
+
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            uri: "http://localhost:4002",
+            manager: {
+                managernr: '',
+                emailM: '',
+                telnumberM: '',
+                pernr: ''
+            },
+            managers: [],
+        },
+        methods: {
+            getManagers: function () {
+                this.$http.get(this.uri + '/api/managers').then(response => {
+                    this.managers = response.body;
+                }, response => {
+                    alert("Error, please try again later");
+                    // error callback
+                });
+            },
+
+            addNewManager: function () {
+                this.$http.post(this.uri + '/api/managers', this.manager, {
+                    emulateJSON: false
+                }).then(response => {
+                    location.reload();
+                }, response => {
+                    console.log(response);
+                    alert("Error, please try again later ");
+                    // error callback
+                });
+            },
+
+            deleteManager: function () {
+                this.$http.post(this.uri + '/api/managers/delete', this.manager, {
+                    emulateJSON: false
+                }).then(response => {
+                    location.reload();
+                }, response => {
+                    alert("Error, please try again later");
+                    // error callback
+                });
+            }
+        },
+
+        created: function () {
+            this.getManagers();
+        }
+    })
+</script>
+
+</html>

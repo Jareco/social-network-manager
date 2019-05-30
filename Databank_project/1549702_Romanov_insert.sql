@@ -1,16 +1,3 @@
-DELETE FROM developer;
-DELETE FROM manager;
-DELETE FROM worker;
-DELETE FROM profile;
-DELETE FROM friendOf;
-DELETE FROM user;
-DELETE FROM socialNetwork;
-
-
-
-
-
-
 
 INSERT INTO socialNetwork VALUES ('http://vk.com','blaue Farbe','VK');
 INSERT INTO user VALUES ('afd@dfs.at', 'Mark', 'Lehner','http://vk.com');

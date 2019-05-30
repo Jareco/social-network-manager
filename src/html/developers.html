@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Developers</title>
+</head>
+
+<body>
+    <div id="app">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="index.html">Home</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="networks.html">Social Network</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="users.html">User</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="profiles.html">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="workers.html">Worker</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="developers.html">Developer <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="managers.html">Manager</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <main>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <h1>Developers</h1>
+                </div>
+                <div class="row">
+                    <table class="table table-dark" style="overflow-y:scroll; height: 400px;">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Developer Number</th>
+                                <th scope="col">Nickname</th>
+                                <th scope="col">Login</th>
+                                <th scope="col">Password</th>
+                                <th scope="col">Personal Number</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(developer, index) in developers">
+                                <th scope="row">{{ index + 1 }}</th>
+                                <td>{{ developer.developernr }}</td>
+                                <td>{{ developer.nickname }}</td>
+                                <td>{{ developer.login }}</td>
+                                <td>{{ developer.password }}</td>
+                                <td>{{ developer.pernr }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        Add and delete a Social network:
+                        <input type="text" class="form-control" id="exampleInput1" placeholder="Developer Number (also use to delete)"
+                            v-model="developer.developernr">
+                        <input type="text" class="form-control" id="exampleInput2" placeholder="Nickname"
+                            v-model="developer.nickname">
+                        <input type="text" class="form-control" id="exampleInput3" placeholder="Login"
+                            v-model="developer.login">
+                        <input type="text" class="form-control" id="exampleInput4" placeholder="Password"
+                            v-model="developer.password">
+                        <input type="text" class="form-control" id="exampleInput5" placeholder="Personal Number"
+                            v-model="developer.pernr">
+                        <button class="btn btn-secondary float-right" v-on:click="addNewDeveloper">Add</button>
+                        <button class="btn btn-outline-danger float-left" v-on:click="deleteDeveloper">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+
+        </footer>
+
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+</body>
+
+
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            uri: "http://localhost:4002",
+            developer: {
+                developernr: '',
+                nickname: '',
+                login: '',
+                password: '',
+                pernr: ''
+            },
+            developers: [],
+        },
+        methods: {
+            getDevelopers: function () {
+                this.$http.get(this.uri + '/api/developers').then(response => {
+                    this.developers = response.body;
+                }, response => {
+                    alert("Error, please try again later");
+                    // error callback
+                });
+            },
+
+            addNewDeveloper: function () {
+                this.$http.post(this.uri + '/api/developers', this.developer, {
+                    emulateJSON: false
+                }).then(response => {
+                    location.reload();
+                }, response => {
+                    console.log(response);
+                    alert("Error, please try again later ");
+                    // error callback
+                });
+            },
+
+            deleteDeveloper: function () {
+                this.$http.post(this.uri + '/api/developers/delete', this.developer, {
+                    emulateJSON: false
+                }).then(response => {
+                    location.reload();
+                }, response => {
+                    alert("Error, please try again later");
+                    // error callback
+                });
+            }
+        },
+
+        created: function () {
+            this.getDevelopers();
+        }
+    })
+</script>
+
+</html>

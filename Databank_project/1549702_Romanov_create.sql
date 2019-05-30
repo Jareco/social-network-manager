@@ -51,7 +51,7 @@ CREATE TABLE developer
     developernr INTEGER(10) NOT NULL,
     nickname VARCHAR(50) NOT NULL,
     login VARCHAR(50) NOT NULL,
-    passwort VARCHAR(50) NOT NULL,
+    password VARCHAR(50) NOT NULL,
     pernr INTEGER(10) NOT NULL,
     CONSTRAINT compare_developer CHECK (pernr != developernr),
     CONSTRAINT un_developer UNIQUE(nickname),
