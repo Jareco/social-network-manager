@@ -1,0 +1,57 @@
+# To start/stop the services, use docker-compose up/down
+version: "3.2"
+
+services:
+  ms2_server:
+    image: flask
+    build:
+      dockerfile: MS2.dockerfile
+      # set context for build command explicitly
+      context: .
+    volumes:
+      - ./src/:/app/
+    ports:
+      - 4002:80
+    depends_on:
+      - mariadb
+    networks:
+      imsenet:
+
+  apache:
+    image: apache
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 4001:80
+    volumes:
+      - ./src/html/:/usr/local/apache2/htdocs/
+    stdin_open: true
+    tty: true
+    networks:
+      imsenet:
+
+  # databases
+  mariadb:
+    image: mariadb
+    environment:
+        - MYSQL_DATABASE=imse
+        - MYSQL_ROOT_PASSWORD=root
+        - MYSQL_USER=imse
+        - MYSQL_PASSWORD=imsepwd
+    volumes:
+      - type: bind
+        source: ./data/mariadb
+        target: /var/lib/mysql
+    stdin_open: true
+    tty: true
+    ports:
+      - target: 3306
+        published: 3306
+        protocol: tcp
+    networks:
+      imsenet:
+
+networks:
+  imsenet:
+    attachable: true
