@@ -3,10 +3,15 @@ import mysql.connector
 class MysqlConnection:
     
     def __init__(self):
-        self.mydb = mysql.connector.connect(user='imse',
-                                            database='imse',
-                                            password="imsepwd",
-                                            host='mariadb');
+        while True:
+            try:
+                self.mydb = mysql.connector.connect(user='imse',
+                                                    database='imse',
+                                                    password="imsepwd",
+                                                    host='mariadb');
+                break;
+            except:
+                continue;
     
     
     # All actions, which only read from database

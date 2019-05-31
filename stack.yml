@@ -24,21 +24,6 @@ services:
       imsenet:
 
 
-  ms2_server:
-    image: flask
-    build:
-      dockerfile: MS2.dockerfile
-      # set context for build command explicitly
-      context: .
-    volumes:
-      - ./src/:/app/
-    ports:
-      - 4002:80
-    depends_on:
-      - mariadb
-    networks:
-      imsenet:
-
   apache:
     image: apache
     build:
@@ -53,6 +38,21 @@ services:
     networks:
       imsenet:
 
+  ms2_server:
+    image: flask
+    build:
+      dockerfile: MS2.dockerfile
+      # set context for build command explicitly
+      context: .
+    volumes:
+      - ./src/:/app/
+    ports:
+      - 4002:80
+    depends_on:
+      - mariadb
+    networks:
+      imsenet:
+        
 networks:
   imsenet:
     attachable: true
