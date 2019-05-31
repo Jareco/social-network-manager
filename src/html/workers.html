@@ -75,6 +75,8 @@
                                 <th scope="col">Last Name</th>
                                 <th scope="col">Birthday</th>
                                 <th scope="col">URL</th>
+                                <th scope="col">Since</th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -85,6 +87,8 @@
                                 <td>{{ worker.lastName }}</td>
                                 <td>{{ worker.birthdate }}</td>
                                 <td>{{ worker.url }}</td>
+                                <td>{{ worker.since }}</td>
+
                             </tr>
                         </tbody>
                     </table>
@@ -105,6 +109,8 @@
                             v-model="worker.birthdate">
                         <input type="text" class="form-control" id="exampleInput5" placeholder="URL (Must be in the social network)"
                             v-model="worker.url">
+                            <input type="text" class="form-control" id="exampleInput5" placeholder="URL (Must be in the social network)"
+                            v-model="worker.since">
                         <button class="btn btn-secondary float-right" v-on:click="addNewProfile">Add</button>
                         <button class="btn btn-outline-danger float-left" v-on:click="deleteProfile">Delete</button>
                     </div>
@@ -142,7 +148,8 @@
                 firstName: '',
                 lastName: '',
                 birthdate: '',
-                url: ''
+                url: '',
+                since: '',
             },
             workers: [],
             firstNameToSearch: '',

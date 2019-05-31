@@ -52,7 +52,7 @@ def handle_users():
         return Response(json.dumps(users), status=200);
     else:
         user_to_add = request.json;
-        handler.add(user_to_add['email'], user_to_add['firstName'], user_to_add['email'], user_to_add['lastName'], user_to_add['url']);
+        handler.add(user_to_add['email'], user_to_add['firstName'], user_to_add['lastName'], user_to_add['url']);
         return Response(status=200);
 
 @app.route("/api/users/delete", methods=['POST'])
@@ -102,7 +102,7 @@ def handle_workers():
         return Response(json.dumps(workers, indent=4, sort_keys=True, default=str), status=200);
     else:
         worker_to_add = request.json;
-        handler.add(worker_to_add['pernr'], worker_to_add['firstName'], worker_to_add['lastName'], worker_to_add['birthdate'], worker_to_add['url']);
+        handler.add(worker_to_add['pernr'], worker_to_add['firstName'], worker_to_add['lastName'], worker_to_add['birthdate'], worker_to_add['url'], worker_to_add['since']);
         return Response(status=200);
 
 @app.route("/api/workers/delete", methods=['POST'])

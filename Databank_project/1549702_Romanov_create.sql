@@ -43,6 +43,7 @@ CREATE TABLE worker
     lastName VARCHAR(20) NOT NULL,
     birthdate DATE NOT NULL,
     url VARCHAR(50),
+    since DATE NOT NULL,
     CONSTRAINT pk_worker PRIMARY KEY(pernr),
     CONSTRAINT fk_worker FOREIGN KEY(url) REFERENCES socialNetwork(url)
 );

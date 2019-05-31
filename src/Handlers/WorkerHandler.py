@@ -8,8 +8,8 @@ class WorkerHandler:
         workers = self.db_conn.read_action("SELECT * FROM worker");
         return workers;
     
-    def add(self, pernr, first_name, last_name, birthdate, url):
-        sql = f"INSERT INTO worker (pernr, firstName, lastName, birthdate, url) VALUES ('{pernr}', '{first_name}', '{last_name}','{birthdate}', '{url}')";
+    def add(self, pernr, first_name, last_name, birthdate, url, since):
+        sql = f"INSERT INTO worker (pernr, firstName, lastName, birthdate, url) VALUES ('{pernr}', '{first_name}', '{last_name}','{birthdate}', '{url}', '{since}')";
         self.db_conn.write_action(sql);
     
     def delete_by_pernr(self, pernr):
