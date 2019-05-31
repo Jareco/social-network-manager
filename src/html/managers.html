@@ -67,26 +67,28 @@
 
 
                 <div class="row">
-                    <table class="table table-dark" style="overflow-y:scroll; height: 400px;">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Manager Number</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Telephone number</th>
-                                <th scope="col">Personal Number</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="(manager, index) in managers">
-                                <th scope="row">{{ index + 1 }}</th>
-                                <td>{{ manager.managernr }}</td>
-                                <td>{{ manager.emailM }}</td>
-                                <td>{{ manager.telnumberM }}</td>
-                                <td>{{ manager.pernr }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="col-12" style="overflow-y:auto; height: 400px;">
+                        <table class="table table-dark" style="overflow-y:scroll; height: 400px;">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Manager Number</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Telephone number</th>
+                                    <th scope="col">Personal Number</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(manager, index) in managers">
+                                    <th scope="row">{{ index + 1 }}</th>
+                                    <td>{{ manager.managernr }}</td>
+                                    <td>{{ manager.emailM }}</td>
+                                    <td>{{ manager.telnumberM }}</td>
+                                    <td>{{ manager.pernr }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 

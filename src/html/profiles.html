@@ -76,32 +76,34 @@
                 </div>
 
                 <div class="row">
-                    <table class="table table-dark" style="overflow-y:scroll; height: 400px;">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Id</th>
-                                <th scope="col">Birthday</th>
-                                <th scope="col">City</th>
-                                <th scope="col">Telephone number</th>
-                                <th scope="col">Education</th>
-                                <th scope="col">Number of photos</th>
-                                <th scope="col">Email</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="(profile, index) in profiles">
-                                <th scope="row">{{ index + 1 }}</th>
-                                <td>{{ profile.id }}</td>
-                                <td>{{ profile.birthdate }}</td>
-                                <td>{{ profile.city }}</td>
-                                <td>{{ profile.telnumber }}</td>
-                                <td>{{ profile.education }}</td>
-                                <td>{{ profile.photos }}</td>
-                                <td>{{ profile.email }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="col-12" style="overflow-y:auto; height: 400px;">
+                        <table class="table table-dark" style="overflow-y:scroll; height: 400px;">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Id</th>
+                                    <th scope="col">Birthday</th>
+                                    <th scope="col">City</th>
+                                    <th scope="col">Telephone number</th>
+                                    <th scope="col">Education</th>
+                                    <th scope="col">Number of photos</th>
+                                    <th scope="col">Email</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(profile, index) in profiles">
+                                    <th scope="row">{{ index + 1 }}</th>
+                                    <td>{{ profile.id }}</td>
+                                    <td>{{ profile.birthdate }}</td>
+                                    <td>{{ profile.city }}</td>
+                                    <td>{{ profile.telnumber }}</td>
+                                    <td>{{ profile.education }}</td>
+                                    <td>{{ profile.photos }}</td>
+                                    <td>{{ profile.email }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 

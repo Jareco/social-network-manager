@@ -34,8 +34,6 @@ CREATE TABLE profile
     CONSTRAINT pk_profil PRIMARY KEY (id,email),
     CONSTRAINT fk_profil FOREIGN KEY (email) REFERENCES user(email) ON DELETE CASCADE
 );
-
-
 CREATE TABLE worker
 (
     pernr INTEGER(10) NOT NULL,

@@ -66,28 +66,30 @@
                 </div>
 
                 <div class="row">
-                    <table class="table table-dark" style="overflow-y:scroll; height: 400px;">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Developer Number</th>
-                                <th scope="col">Nickname</th>
-                                <th scope="col">Login</th>
-                                <th scope="col">Password</th>
-                                <th scope="col">Personal Number</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="(developer, index) in developers">
-                                <th scope="row">{{ index + 1 }}</th>
-                                <td>{{ developer.developernr }}</td>
-                                <td>{{ developer.nickname }}</td>
-                                <td>{{ developer.login }}</td>
-                                <td>{{ developer.password }}</td>
-                                <td>{{ developer.pernr }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="col-12" style="overflow-y:auto; height: 400px;">
+                        <table class="table table-dark" style="overflow-y:scroll; height: 400px;">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Developer Number</th>
+                                    <th scope="col">Nickname</th>
+                                    <th scope="col">Login</th>
+                                    <th scope="col">Password</th>
+                                    <th scope="col">Personal Number</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(developer, index) in developers">
+                                    <th scope="row">{{ index + 1 }}</th>
+                                    <td>{{ developer.developernr }}</td>
+                                    <td>{{ developer.nickname }}</td>
+                                    <td>{{ developer.login }}</td>
+                                    <td>{{ developer.password }}</td>
+                                    <td>{{ developer.pernr }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
@@ -95,8 +97,8 @@
                 <div class="row">
                     <div class="col-12">
                         Add and delete a Social network:
-                        <input type="text" class="form-control" id="exampleInput1" placeholder="Developer Number (also use to delete)"
-                            v-model="developer.developernr">
+                        <input type="text" class="form-control" id="exampleInput1"
+                            placeholder="Developer Number (also use to delete)" v-model="developer.developernr">
                         <input type="text" class="form-control" id="exampleInput2" placeholder="Nickname"
                             v-model="developer.nickname">
                         <input type="text" class="form-control" id="exampleInput3" placeholder="Login"
