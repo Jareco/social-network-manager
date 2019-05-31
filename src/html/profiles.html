@@ -53,6 +53,18 @@
                 <div class="row justify-content-center">
                     <h1>Profiles</h1>
                 </div>
+
+                <div class="row justify-content-center">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" id="exampleInput1" placeholder="Email"
+                            v-model="emailToSearch" v-on:keyup.enter="searchByEmail">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-success" type="button"
+                                v-on:click="searchByEmail">Search</button>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="row">
                     <table class="table table-dark" style="overflow-y:scroll; height: 400px;">
                         <thead>
@@ -143,8 +155,22 @@
                 email: ''
             },
             profiles: [],
+            emailToSearch: '',
         },
         methods: {
+
+            searchByEmail: function () {
+                this.$http.post(this.uri + '/api/profiles/search', {
+                    valueToSearch: this.emailToSearch
+                }).then(response => {
+                    this.profiles = response.body;
+                }, response => {
+                    alert("Error, please try again later");
+                    // error callback
+                });
+            },
+
+
             getProfiles: function () {
                 this.$http.get(this.uri + '/api/profiles').then(response => {
                     this.profiles = response.body;

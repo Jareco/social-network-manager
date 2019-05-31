@@ -16,5 +16,10 @@ class ProfileHandler:
         sql = f"DELETE FROM profile WHERE id = '{id}'";
         self.db_conn.write_action(sql);
         
+    def find_by_email(self, email_to_search):
+        sql = "SELECT * FROM profile WHERE email like '%" + email_to_search + "%'";
+        profiles = self.db_conn.read_action(sql);
+        return profiles;
+        
 
         

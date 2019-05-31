@@ -37,6 +37,13 @@ def delete_network():
     handler.delete_by_url(network_to_delete['url']);
     return Response(status=200);
 
+@app.route("/api/networks/search", methods=['POST'])
+def find_networks():
+    handler = SocialNetworkHandler(database_connection);
+    url_to_search = request.json['valueToSearch'];
+    networks = handler.find_by_url(url_to_search);
+    return Response(json.dumps(networks), status=200);
+
 @app.route("/api/users", methods=['GET', 'POST'])
 def handle_users():
     handler = UserHandler(database_connection);
@@ -54,6 +61,13 @@ def delete_user():
     user_to_delete = request.json;
     handler.delete_by_email(user_to_delete['email']);
     return Response(status=200);
+
+@app.route("/api/users/search", methods=['POST'])
+def find_users():
+    handler = UserHandler(database_connection);
+    email_to_search = request.json['valueToSearch'];
+    users = handler.find_by_email(email_to_search);
+    return Response(json.dumps(users), status=200);
 
 @app.route("/api/profiles", methods=['GET', 'POST'])
 def handle_profiles():
@@ -73,6 +87,12 @@ def delete_profile():
     handler.delete_by_id(profile_to_delete['id']);
     return Response(status=200);
 
+@app.route("/api/profiles/search", methods=['POST'])
+def find_profiles():
+    handler = ProfileHandler(database_connection);
+    email_to_search = request.json['valueToSearch'];
+    profiles = handler.find_by_email(email_to_search);
+    return Response(json.dumps(profiles, indent=4, sort_keys=True, default=str), status=200);
 
 @app.route("/api/workers", methods=['GET', 'POST'])
 def handle_workers():
@@ -91,6 +111,13 @@ def delete_worker():
     worker_to_delete = request.json;
     handler.delete_by_pernr(worker_to_delete['pernr']);
     return Response(status=200);
+
+@app.route("/api/workers/search", methods=['POST'])
+def find_workers():
+    handler = WorkerHandler(database_connection);
+    first_name_to_search = request.json['valueToSearch'];
+    workers = handler.find_by_first_name(first_name_to_search);
+    return Response(json.dumps(workers, indent=4, sort_keys=True, default=str), status=200);
 
 
 @app.route("/api/developers", methods=['GET', 'POST'])
@@ -111,7 +138,15 @@ def delete_developer():
     developer_to_delete = request.json;
     handler.delete_by_developernr(developer_to_delete['developernr']);
     return Response(status=200);
-        
+
+@app.route("/api/developers/search", methods=['POST'])
+def find_developers():
+    handler = DeveloperHandler(database_connection);
+    developer_number_to_search = request.json['valueToSearch'];
+    developers = handler.find_by_developer_number(developer_number_to_search);
+    return Response(json.dumps(developers), status=200);
+
+
 @app.route("/api/managers", methods=['GET', 'POST'])
 def handler_managers():
     handler = ManagerHandler(database_connection);
@@ -129,6 +164,13 @@ def delete_manager():
     manager_to_delete = request.json;
     handler.delete_by_managernr(manager_to_delete['managernr']);
     return Response(status=200);
+
+@app.route("/api/managers/search", methods=['POST'])
+def find_managers():
+    handler = ManagerHandler(database_connection);
+    manager_number_to_search = request.json['valueToSearch'];
+    managers = handler.find_by_manager_number(manager_number_to_search);
+    return Response(json.dumps(managers), status=200);
 
 
 if __name__ == "__main__":

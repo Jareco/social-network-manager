@@ -15,6 +15,11 @@ class DeveloperHandler:
     def delete_by_developernr(self, developernr):
         sql = f"DELETE FROM developer WHERE developernr = '{developernr}'";
         self.db_conn.write_action(sql);
+
+    def find_by_developer_number(self, developer_number_to_search):
+        sql = "SELECT * FROM developer WHERE developernr like '%" + developer_number_to_search + "%'";
+        developers = self.db_conn.read_action(sql);
+        return developers;
         
 
         

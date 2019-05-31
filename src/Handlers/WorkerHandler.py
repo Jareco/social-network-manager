@@ -15,6 +15,11 @@ class WorkerHandler:
     def delete_by_pernr(self, pernr):
         sql = f"DELETE FROM worker WHERE pernr = '{pernr}'";
         self.db_conn.write_action(sql);
+    
+    def find_by_first_name(self, first_name_to_search):
+        sql = "SELECT * FROM worker WHERE firstName like '%" + first_name_to_search + "%'";
+        workers = self.db_conn.read_action(sql);
+        return workers;
      
 
         

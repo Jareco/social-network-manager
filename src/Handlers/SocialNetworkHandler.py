@@ -15,6 +15,11 @@ class SocialNetworkHandler:
     def delete_by_url(self, url):
         sql = f"DELETE FROM socialNetwork WHERE url = '{url}'";
         self.db_conn.write_action(sql);
+
+    def find_by_url(self, url_to_search):
+        sql = "SELECT * FROM socialNetwork WHERE url like '%" + url_to_search + "%'";
+        networks = self.db_conn.read_action(sql);
+        return networks;
         
 
         
