@@ -20,6 +20,10 @@ class ProfileHandler:
         sql = "SELECT * FROM profile WHERE email like '%" + email_to_search + "%'";
         profiles = self.db_conn.read_action(sql);
         return profiles;
-        
+
+    def find_double(self):
+        sql = "SELECT * from profile GROUP BY email HAVING COUNT(*) > 1)";
+        profiles = self.db_conn.read_action(sql);
+        return profiles;     
 
         

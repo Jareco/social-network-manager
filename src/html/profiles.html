@@ -65,6 +65,16 @@
                     </div>
                 </div>
 
+                <div class="row mb-4">
+                    <div class="col-6">
+                        <h4>--- Find double Profiles with the same email:</h4>
+                    </div>
+                    <div class="col-2"> <button class="btn btn-outline-success" type="button"
+                            v-on:click="findDoubleProfiles">Search</button></div>
+                    <div class="col-4"></div>
+
+                </div>
+
                 <div class="row">
                     <table class="table table-dark" style="overflow-y:scroll; height: 400px;">
                         <thead>
@@ -158,6 +168,14 @@
             emailToSearch: '',
         },
         methods: {
+            findDoubleProfiles: function () {
+                this.$http.get(this.uri + '/api/profiles/search/double').then(response => {
+                    this.profiles = response.body;
+                }, response => {
+                    alert("Error, please try again later");
+                    // error callback
+                });
+            },
 
             searchByEmail: function () {
                 this.$http.post(this.uri + '/api/profiles/search', {

@@ -94,6 +94,12 @@ def find_profiles():
     profiles = handler.find_by_email(email_to_search);
     return Response(json.dumps(profiles, indent=4, sort_keys=True, default=str), status=200);
 
+@app.route("/api/profiles/search/double", methods=['GET'])
+def find_double_profiles():
+    handler = ProfileHandler(database_connection);
+    profiles = handler.find_double();
+    return Response(json.dumps(profiles, indent=4, sort_keys=True, default=str), status=200);
+
 @app.route("/api/workers", methods=['GET', 'POST'])
 def handle_workers():
     handler = WorkerHandler(database_connection);
