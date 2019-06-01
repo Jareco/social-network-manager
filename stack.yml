@@ -28,7 +28,7 @@ services:
     image: apache
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Apache.dockerfile
     ports:
       - 4001:80
     volumes:
@@ -38,10 +38,22 @@ services:
     networks:
       imsenet:
 
+  filler:
+    image: filler
+    build:
+      dockerfile: Filler.dockerfile
+      context: .
+    depends_on:
+      - mariadb
+    volumes:
+      - ./filler:/filler
+    networks:
+      imsenet:
+
   ms2_server:
     image: flask
     build:
-      dockerfile: MS2.dockerfile
+      dockerfile: Flask.dockerfile
       # set context for build command explicitly
       context: .
     volumes:
@@ -49,7 +61,7 @@ services:
     ports:
       - 4002:80
     depends_on:
-      - mariadb
+      - filler
     networks:
       imsenet:
         
