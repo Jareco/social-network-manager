@@ -76,6 +76,7 @@
                                     <th scope="col">Login</th>
                                     <th scope="col">Password</th>
                                     <th scope="col">Personal Number</th>
+                                    <th scope="col">Details</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -86,6 +87,33 @@
                                     <td>{{ developer.login }}</td>
                                     <td>{{ developer.password }}</td>
                                     <td>{{ developer.pernr }}</td>
+                                    <td><button class="btn btn-outline-success"
+                                            v-on:click="showDetails(developer.developernr)">Details</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row" v-if="detailedDeveloper">
+                    <div class="col-12">
+                        <h1 class="text-center">Detailed information:</h1>
+                        <table class="table table-dark">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Developer Number</th>
+                                    <th scope="col">Social Network</th>
+                                    <th scope="col">Employement Date</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>{{ detailedDeveloper.developernr }}</td>
+                                    <td>{{ detailedDeveloper.socialNetwork }}</td>
+                                    <td>{{ detailedDeveloper.employementDate }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -144,12 +172,22 @@
                 nickname: '',
                 login: '',
                 password: '',
-                pernr: ''
+                pernr: '',
             },
+            detailedDeveloper: null,
             developers: [],
             developerNumberToSearch: '',
         },
         methods: {
+            showDetails: function (developernr) {
+                this.$http.get(this.uri + '/api/developers/details/' + developernr).then(response => {
+                    this.detailedDeveloper = response.body[0];
+                    console.log(this.detailedDeveloper);
+                }, response => {
+                    alert("Error, please try again later");
+                    // error callback
+                });
+            },
             searchByDeveloperNumber: function () {
                 this.$http.post(this.uri + '/api/developers/search', {
                     valueToSearch: this.developerNumberToSearch

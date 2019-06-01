@@ -152,6 +152,11 @@ def find_developers():
     developers = handler.find_by_developer_number(developer_number_to_search);
     return Response(json.dumps(developers), status=200);
 
+@app.route("/api/developers/details/<developernr>", methods=['GET'])
+def get_developer_details(developernr):
+    handler = DeveloperHandler(database_connection);
+    developers = handler.get_developer_details(developernr);
+    return Response(json.dumps(developers, indent=4, sort_keys=True, default=str), status=200);
 
 @app.route("/api/managers", methods=['GET', 'POST'])
 def handler_managers():
