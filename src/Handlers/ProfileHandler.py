@@ -22,7 +22,7 @@ class ProfileHandler:
         return profiles;
 
     def find_double(self):
-        sql = "SELECT * from profile GROUP BY email HAVING COUNT(*) > 1";
+        sql = "SELECT * FROM profile WHERE email = (SELECT email from profile GROUP BY email HAVING COUNT(*) > 1)";
         profiles = self.db_conn.read_action(sql);
         return profiles;     
 
