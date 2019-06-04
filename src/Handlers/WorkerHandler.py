@@ -9,7 +9,7 @@ class WorkerHandler:
         return workers;
     
     def add(self, pernr, first_name, last_name, birthdate, url, since):
-        sql = f"INSERT INTO worker (pernr, firstName, lastName, birthdate, url) VALUES ('{pernr}', '{first_name}', '{last_name}','{birthdate}', '{url}', '{since}')";
+        sql = f"INSERT INTO worker (pernr, firstName, lastName, birthdate, url, since) VALUES ('{pernr}', '{first_name}', '{last_name}','{birthdate}', '{url}', '{since}')";
         self.db_conn.write_action(sql);
     
     def delete_by_pernr(self, pernr):

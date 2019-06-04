@@ -13,8 +13,10 @@ class UserHandler:
         self.db_conn.write_action(sql);
     
     def delete_by_email(self, email):
-        sql = f"DELETE FROM user WHERE email = '{email}'";
-        self.db_conn.write_action(sql);
+        sql1 = f"DELETE FROM friendOf WHERE email1 = '{email}' OR email2 = '{email}'";
+        self.db_conn.write_action(sql1);
+        sql2 = f"DELETE FROM user WHERE email = '{email}'";
+        self.db_conn.write_action(sql2);
 
     def find_by_email(self, email_to_search):
         sql = "SELECT * FROM user WHERE email like '%" + email_to_search + "%'";

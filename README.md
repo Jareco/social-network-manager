@@ -1,6 +1,6 @@
 # Social Netwrok Manager
 
-### This is the university project. THe goal is a simple admin view of any social network. 
+### This is the university project. The goal is a simple admin view of any social network. 
 
 # Getting Startet (How to run):
 ## 1)To run this app just use the command "docker-compose -f stack.yml up".

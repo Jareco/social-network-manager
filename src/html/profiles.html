@@ -117,13 +117,13 @@
                             v-model="profile.birthdate">
                         <input type="text" class="form-control" id="exampleInput3" placeholder="City"
                             v-model="profile.city">
-                        <input type="text" class="form-control" id="exampleInput4" placeholder="Telephone number"
+                        <input type="number" class="form-control" id="exampleInput4" placeholder="Telephone number (don't start with 0!)"
                             v-model="profile.telnumber">
                         <input type="text" class="form-control" id="exampleInput5" placeholder="Education"
                             v-model="profile.education">
-                        <input type="text" class="form-control" id="exampleInput6" placeholder="Photos"
+                        <input type="number" class="form-control" id="exampleInput6" placeholder="Number of Photos"
                             v-model="profile.photos">
-                        <input type="text" class="form-control" id="exampleInput7" placeholder="ID (ONLY FOR DELETION!)"
+                        <input type="number" class="form-control" id="exampleInput7" placeholder="ID (ONLY FOR DELETION!)"
                             v-model="profile.id">
                         <button class="btn btn-secondary float-right" v-on:click="addNewProfile">Add</button>
                         <button class="btn btn-outline-danger float-left" v-on:click="deleteProfile">Delete</button>

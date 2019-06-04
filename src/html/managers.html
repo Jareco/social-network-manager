@@ -96,13 +96,13 @@
                 <div class="row">
                     <div class="col-12">
                         Add and delete a Social network:
-                        <input type="text" class="form-control" id="exampleInput1"
+                        <input type="number" class="form-control" id="exampleInput1"
                             placeholder="Manager Number (also use to delete)" v-model="manager.managernr">
                         <input type="text" class="form-control" id="exampleInput2" placeholder="Email"
                             v-model="manager.emailM">
-                        <input type="text" class="form-control" id="exampleInput3" placeholder="Telephone Number"
+                        <input type="number" class="form-control" id="exampleInput3" placeholder="Telephone Number (don't start with 0)"
                             v-model="manager.telnumberM">
-                        <input type="text" class="form-control" id="exampleInput5" placeholder="Personal Number"
+                        <input type="number" class="form-control" id="exampleInput5" placeholder="Personal Number"
                             v-model="manager.pernr">
                         <button class="btn btn-secondary float-right" v-on:click="addNewManager">Add</button>
                         <button class="btn btn-outline-danger float-left" v-on:click="deleteManager">Delete</button>

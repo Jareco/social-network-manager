@@ -125,7 +125,7 @@
                 <div class="row">
                     <div class="col-12">
                         Add and delete a Social network:
-                        <input type="text" class="form-control" id="exampleInput1"
+                        <input type="number" class="form-control" id="exampleInput1"
                             placeholder="Developer Number (also use to delete)" v-model="developer.developernr">
                         <input type="text" class="form-control" id="exampleInput2" placeholder="Nickname"
                             v-model="developer.nickname">
@@ -133,7 +133,7 @@
                             v-model="developer.login">
                         <input type="text" class="form-control" id="exampleInput4" placeholder="Password"
                             v-model="developer.password">
-                        <input type="text" class="form-control" id="exampleInput5" placeholder="Personal Number"
+                        <input type="number" class="form-control" id="exampleInput5" placeholder="Personal Number"
                             v-model="developer.pernr">
                         <button class="btn btn-secondary float-right" v-on:click="addNewDeveloper">Add</button>
                         <button class="btn btn-outline-danger float-left" v-on:click="deleteDeveloper">Delete</button>

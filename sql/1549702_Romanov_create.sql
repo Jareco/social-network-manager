@@ -12,15 +12,15 @@ CREATE TABLE user
     lastName VARCHAR(20) NOT NULL,
     url VARCHAR(20) NOT NULL,
     CONSTRAINT pk_user PRIMARY KEY(email),
-    CONSTRAINT fk_user FOREIGN KEY(url) REFERENCES socialNetwork(url)
+    CONSTRAINT fk_user FOREIGN KEY(url) REFERENCES socialNetwork(url) ON DELETE CASCADE
 );
 CREATE TABLE friendOf
 (
     email1 VARCHAR(50),
     email2 VARCHAR(50),
     CONSTRAINT pk_frieandOf PRIMARY KEY(email1, email2),
-    CONSTRAINT fk_frieandOf1 FOREIGN KEY(email1) REFERENCES user(email),
-    CONSTRAINT fk_frieandOf2 FOREIGN KEY(email2) REFERENCES user(email)
+    CONSTRAINT fk_frieandOf1 FOREIGN KEY(email1) REFERENCES user(email) ON DELETE CASCADE,
+    CONSTRAINT fk_frieandOf2 FOREIGN KEY(email2) REFERENCES user(email) ON DELETE CASCADE
 );
 CREATE TABLE profile
 (
@@ -43,7 +43,7 @@ CREATE TABLE worker
     url VARCHAR(50),
     since DATE NOT NULL,
     CONSTRAINT pk_worker PRIMARY KEY(pernr),
-    CONSTRAINT fk_worker FOREIGN KEY(url) REFERENCES socialNetwork(url)
+    CONSTRAINT fk_worker FOREIGN KEY(url) REFERENCES socialNetwork(url) ON DELETE CASCADE
 );
 CREATE TABLE developer
 (
