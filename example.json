@@ -35,6 +35,8 @@
     "birthdate": "1990-02-21",
     "pernr": 345,
     "type": "developer",
+    "since": "2012-02-21",
+    "url": "http://example.com",
     "developer": {
         "developernr": 123,
         "nickname": "jareco",
@@ -51,8 +53,10 @@
     "firstName": "Maximilian",
     "lastName": "Huber",
     "birthdate": "1993-01-22",
-    "perrr": 346,
+    "pernr": 346,
     "type": "manager",
+    "since": "2012-02-21",
+    "url": "http://example.com",
     "manager": {
         "managerrnr": 123,
         "email": "manager@manager.com",

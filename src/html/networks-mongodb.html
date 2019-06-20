@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <title>Profiles</title>
+    <title>Networks Mongo DB</title>
 </head>
 
 <body>
@@ -36,7 +36,7 @@
                         <a class="nav-link" href="users.html">User</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="profiles.html">Profile <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="profiles.html">Profile</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="workers.html">Worker</a>
@@ -57,55 +57,35 @@
         <main>
             <div class="container">
                 <div class="row justify-content-center">
-                    <h1>Profiles</h1>
+                    <h1>Social Networks Mongo DB</h1>
                 </div>
-
                 <div class="row justify-content-center">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" id="exampleInput1" placeholder="Email"
-                            v-model="emailToSearch" v-on:keyup.enter="searchByEmail">
+                        <input type="text" class="form-control" id="exampleInput1" placeholder="URL"
+                            v-model="urlToSearch" v-on:keyup.enter="searchByUrl">
                         <div class="input-group-append">
                             <button class="btn btn-outline-success" type="button"
-                                v-on:click="searchByEmail">Search</button>
+                                v-on:click="searchByUrl">Search</button>
                         </div>
                     </div>
                 </div>
-
-                <div class="row mb-4">
-                    <div class="col-6">
-                        <h4>--- Find double Profiles with the same email:</h4>
-                    </div>
-                    <div class="col-2"> <button class="btn btn-outline-success" type="button"
-                            v-on:click="findDoubleProfiles">Search</button></div>
-                    <div class="col-4"></div>
-
-                </div>
-
                 <div class="row">
                     <div class="col-12" style="overflow-y:auto; height: 400px;">
                         <table class="table table-dark" style="overflow-y:scroll; height: 400px;">
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Id</th>
-                                    <th scope="col">Birthday</th>
-                                    <th scope="col">City</th>
-                                    <th scope="col">Telephone number</th>
-                                    <th scope="col">Education</th>
-                                    <th scope="col">Number of photos</th>
-                                    <th scope="col">Email</th>
+                                    <th scope="col">Url</th>
+                                    <th scope="col">Design</th>
+                                    <th scope="col">Name</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(profile, index) in profiles">
+                                <tr v-for="(network, index) in networks">
                                     <th scope="row">{{ index + 1 }}</th>
-                                    <td>{{ profile.id }}</td>
-                                    <td>{{ profile.birthdate }}</td>
-                                    <td>{{ profile.city }}</td>
-                                    <td>{{ profile.telnumber }}</td>
-                                    <td>{{ profile.education }}</td>
-                                    <td>{{ profile.photos }}</td>
-                                    <td>{{ profile.email }}</td>
+                                    <td>{{ network.url }}</td>
+                                    <td>{{ network.design }}</td>
+                                    <td>{{ network.name }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -117,22 +97,14 @@
                 <div class="row">
                     <div class="col-12">
                         Add and delete a Social network:
-                        <input type="text" class="form-control" id="exampleInput1" placeholder="Email"
-                            v-model="profile.email">
-                        <input type="text" class="form-control" id="exampleInput2" placeholder="Birthday"
-                            v-model="profile.birthdate">
-                        <input type="text" class="form-control" id="exampleInput3" placeholder="City"
-                            v-model="profile.city">
-                        <input type="number" class="form-control" id="exampleInput4" placeholder="Telephone number (don't start with 0!)"
-                            v-model="profile.telnumber">
-                        <input type="text" class="form-control" id="exampleInput5" placeholder="Education"
-                            v-model="profile.education">
-                        <input type="number" class="form-control" id="exampleInput6" placeholder="Number of Photos"
-                            v-model="profile.photos">
-                        <input type="number" class="form-control" id="exampleInput7" placeholder="ID (ONLY FOR DELETION!)"
-                            v-model="profile.id">
-                        <button class="btn btn-secondary float-right" v-on:click="addNewProfile">Add</button>
-                        <button class="btn btn-outline-danger float-left" v-on:click="deleteProfile">Delete</button>
+                        <input type="text" class="form-control" id="exampleInput1" placeholder="URL (also use to delete)"
+                            v-model="socialNetwork.url">
+                        <input type="text" class="form-control" id="exampleInput2" placeholder="Design"
+                            v-model="socialNetwork.design">
+                        <input type="text" class="form-control" id="exampleInput3" placeholder="Name"
+                            v-model="socialNetwork.name">
+                        <button class="btn btn-secondary float-right" v-on:click="addNewSocialNetwork">Add</button>
+                        <button class="btn btn-outline-danger float-left" v-on:click="deleteNetwork">Delete</button>
                     </div>
                 </div>
             </div>
@@ -163,63 +135,51 @@
         el: '#app',
         data: {
             uri: "http://localhost:4002",
-            profile: {
-                id: '',
-                birthdate: '',
-                city: '',
-                telnumber: '',
-                education: '',
-                photos: '',
-                email: ''
+            socialNetwork: {
+                url: '',
+                design: '',
+                name: '',
             },
-            profiles: [],
-            emailToSearch: '',
+            urlToSearch: '',
+            networks: [],
         },
         methods: {
-            findDoubleProfiles: function () {
-                this.$http.get(this.uri + '/api/profiles/search/double').then(response => {
-                    this.profiles = response.body;
-                }, response => {
-                    alert("Error, please try again later");
-                    // error callback
-                });
-            },
-
-            searchByEmail: function () {
-                this.$http.post(this.uri + '/api/profiles/search', {
-                    valueToSearch: this.emailToSearch
+            searchByUrl: function () {
+                this.$http.post(this.uri + '/api/mongo/networks/search', {
+                    valueToSearch: this.urlToSearch
+                }, {
+                    emulateJSON: false
                 }).then(response => {
-                    this.profiles = response.body;
+                    this.networks = response.body
+
                 }, response => {
                     alert("Error, please try again later");
                     // error callback
                 });
             },
 
-
-            getProfiles: function () {
-                this.$http.get(this.uri + '/api/profiles').then(response => {
-                    this.profiles = response.body;
+            getNetworks: function () {
+                this.$http.get(this.uri + '/api/mongo/networks').then(response => {
+                    this.networks = response.body;
                 }, response => {
                     alert("Error, please try again later");
                     // error callback
                 });
             },
 
-            addNewProfile: function () {
-                this.$http.post(this.uri + '/api/profiles', this.profile, {
+            addNewSocialNetwork: function () {
+                this.$http.post(this.uri + '/api/mongo/networks', this.socialNetwork, {
                     emulateJSON: false
                 }).then(response => {
                     location.reload();
                 }, response => {
-                    console.log(response);
-                    alert("Error, please try again later ");
+                    alert("Error, please try again later");
                     // error callback
                 });
             },
 
-            deleteProfile: function () {
-                this.$http.post(this.uri + '/api/profiles/delete', this.profile, {
+            deleteNetwork: function () {
+                this.$http.post(this.uri + '/api/mongo/networks/delete', this.socialNetwork, {
                     emulateJSON: false
                 }).then(response => {
                     location.reload();
@@ -231,7 +191,7 @@
         },
 
         created: function () {
-            this.getProfiles();
+            this.getNetworks();
         }
     })
 </script>

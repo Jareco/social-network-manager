@@ -8,6 +8,8 @@ from Handlers.WorkerHandler import WorkerHandler
 from Handlers.DeveloperHandler import DeveloperHandler
 from Handlers.ManagerHandler import ManagerHandler
 from Migrator import migrator
+import pymongo
+from bson.json_util import dumps
 
 
 
@@ -189,6 +191,58 @@ def migrate_data():
     migrator.start_migration();
     return Response(json.dumps({'status': 'OK'}), status=200);
 
+@app.route("/api/mongo/networks", methods=['GET', 'POST'])
+def handle_networks_mongo():
+    mongodb_client = pymongo.MongoClient("mongodb://admin:imse@mongo:27017/");
+    mydb = mongodb_client["imse_database"];
+    social_network_collection = mydb["socialNetwork"];
+    if request.method == 'GET':
+        social_networks_json = dumps(social_network_collection.find());
+        return Response(social_networks_json, status=200);
+    if request.method == 'POST':
+        network_to_add = request.json;
+        last_network = social_network_collection.find_one(sort=[( '_id', pymongo.DESCENDING )])
+        last_id = last_network['_id'];
+        network_to_add.update({'_id': last_id + 1});
+        social_network_collection.insert_one(network_to_add);
+        return Response(status=200);
+
+
+@app.route("/api/mongo/networks/delete", methods=['POST'])
+def delete_network_mongo():
+    network_to_delete = request.json;
+    mongodb_client = pymongo.MongoClient("mongodb://admin:imse@mongo:27017/");
+    mydb = mongodb_client["imse_database"];
+    social_network_collection = mydb["socialNetwork"];
+    social_network_collection.delete_many({'url': network_to_delete['url']});
+    return Response(status=200);
+
+
+@app.route("/api/mongo/networks/search", methods=['POST'])
+def find_networks_mongo():
+    url_to_search = request.json['valueToSearch'];
+    mongodb_client = pymongo.MongoClient("mongodb://admin:imse@mongo:27017/");
+    mydb = mongodb_client["imse_database"];
+    social_network_collection = mydb["socialNetwork"];
+    social_networks_json = dumps(social_network_collection.find({'url': {'$regex': '' + url_to_search + ''}}));
+    return Response(social_networks_json, status=200);
+
+@app.route("/api/mongo/developers", methods=['GET'])
+def handler_developers_mongo():
+    mongodb_client = pymongo.MongoClient("mongodb://admin:imse@mongo:27017/");
+    mydb = mongodb_client["imse_database"];
+    worker_collection = mydb["worker"];
+    developers = dumps(worker_collection.find({'type': 'developer'}, {'developer': 1, 'pernr': 1}));
+    return Response(developers, status=200);
+
+@app.route("/api/mongo/developers/details/<workerid>", methods=['GET'])
+def get_developer_details_mongo(workerid):
+    mongodb_client = pymongo.MongoClient("mongodb://admin:imse@mongo:27017/");
+    mydb = mongodb_client["imse_database"];
+    worker_collection = mydb["worker"];
+    worker = worker_collection.find_one({'_id': int(workerid)});
+    response = {'developernr': worker['developer']['developernr'], 'socialNetwork': worker['url'], 'employementDate': worker['since']};
+    return Response(json.dumps(response, indent=4, sort_keys=True, default=str), status=200);
 
 
 if __name__ == "__main__":

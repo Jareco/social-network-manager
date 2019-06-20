@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <title>Managers</title>
+    <title>Developers MongoDB</title>
 </head>
 
 <body>
@@ -45,10 +45,10 @@
                         <a class="nav-link" href="developers.html">Developer</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="developers-mongodb.html">Developer MongoDB</a>
+                        <a class="nav-link" href="developers-mongodb.html">Developer MongoDB<span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="managers.html">Manager <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="managers.html">Manager</a>
                     </li>
                 </ul>
             </div>
@@ -57,20 +57,8 @@
         <main>
             <div class="container">
                 <div class="row justify-content-center">
-                    <h1>Managers</h1>
+                    <h1>Developers MongoDB</h1>
                 </div>
-
-                <div class="row justify-content-center">
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" id="exampleInput1" placeholder="Manager Number"
-                            v-model="managerNumberToSearch" v-on:keyup.enter="searchByManagerNumber">
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-success" type="button"
-                                v-on:click="searchByManagerNumber">Search</button>
-                        </div>
-                    </div>
-                </div>
-
 
                 <div class="row">
                     <div class="col-12" style="overflow-y:auto; height: 400px;">
@@ -78,40 +66,52 @@
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Manager Number</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Telephone number</th>
+                                    <th scope="col">Developer Number</th>
+                                    <th scope="col">Nickname</th>
+                                    <th scope="col">Login</th>
+                                    <th scope="col">Password</th>
                                     <th scope="col">Personal Number</th>
+                                    <th scope="col">Details</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(manager, index) in managers">
+                                <tr v-for="(item, index) in developers">
                                     <th scope="row">{{ index + 1 }}</th>
-                                    <td>{{ manager.managernr }}</td>
-                                    <td>{{ manager.emailM }}</td>
-                                    <td>{{ manager.telnumberM }}</td>
-                                    <td>{{ manager.pernr }}</td>
+                                    <td>{{ item.developer.developernr }}</td>
+                                    <td>{{ item.developer.nickname }}</td>
+                                    <td>{{ item.developer.login }}</td>
+                                    <td>{{ item.developer.password }}</td>
+                                    <td>{{ item.pernr }}</td>
+                                    <td><button class="btn btn-outline-success"
+                                            v-on:click="showDetails(item)">Details</button></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
-            </div>
 
-            <div class="container">
-                <div class="row">
+                <div class="row" v-if="detailedDeveloper">
                     <div class="col-12">
-                        Add and delete a Social network:
-                        <input type="number" class="form-control" id="exampleInput1"
-                            placeholder="Manager Number (also use to delete)" v-model="manager.managernr">
-                        <input type="text" class="form-control" id="exampleInput2" placeholder="Email"
-                            v-model="manager.emailM">
-                        <input type="number" class="form-control" id="exampleInput3" placeholder="Telephone Number (don't start with 0)"
-                            v-model="manager.telnumberM">
-                        <input type="number" class="form-control" id="exampleInput5" placeholder="Personal Number"
-                            v-model="manager.pernr">
-                        <button class="btn btn-secondary float-right" v-on:click="addNewManager">Add</button>
-                        <button class="btn btn-outline-danger float-left" v-on:click="deleteManager">Delete</button>
+                        <h1 class="text-center">Detailed information:</h1>
+                        <table class="table table-dark">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Developer Number</th>
+                                    <th scope="col">Social Network</th>
+                                    <th scope="col">Employement Date</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>{{ detailedDeveloper.developernr }}</td>
+                                    <td>{{ detailedDeveloper.socialNetwork }}</td>
+                                    <td>{{ detailedDeveloper.employementDate }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -142,63 +142,32 @@
         el: '#app',
         data: {
             uri: "http://localhost:4002",
-            manager: {
-                managernr: '',
-                emailM: '',
-                telnumberM: '',
-                pernr: ''
-            },
-            managers: [],
-            managerNumberToSearch: ''
+            detailedDeveloper: null,
+            developers: [],
         },
         methods: {
-
-            searchByManagerNumber: function () {
-                this.$http.post(this.uri + '/api/managers/search', {
-                    valueToSearch: this.managerNumberToSearch
-                }).then(response => {
-                    this.managers = response.body;
+            showDetails: function (item) {
+                worker_id = item._id;
+                this.$http.get(this.uri + '/api/mongo/developers/details/' + worker_id).then(response => {
+                    this.detailedDeveloper = response.body;
                 }, response => {
                     alert("Error, please try again later");
                     // error callback
                 });
             },
 
-            getManagers: function () {
-                this.$http.get(this.uri + '/api/managers').then(response => {
-                    this.managers = response.body;
+            getDevelopers: function () {
+                this.$http.get(this.uri + '/api/mongo/developers').then(response => {
+                    this.developers = response.body;
                 }, response => {
                     alert("Error, please try again later");
                     // error callback
                 });
             },
-
-            addNewManager: function () {
-                this.$http.post(this.uri + '/api/managers', this.manager, {
-                    emulateJSON: false
-                }).then(response => {
-                    location.reload();
-                }, response => {
-                    console.log(response);
-                    alert("Error, please try again later ");
-                    // error callback
-                });
-            },
-
-            deleteManager: function () {
-                this.$http.post(this.uri + '/api/managers/delete', this.manager, {
-                    emulateJSON: false
-                }).then(response => {
-                    location.reload();
-                }, response => {
-                    alert("Error, please try again later");
-                    // error callback
-                });
-            }
         },
 
         created: function () {
-            this.getManagers();
+            this.getDevelopers();
         }
     })
 </script>
