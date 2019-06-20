@@ -7,6 +7,7 @@ from Handlers.ProfileHandler import ProfileHandler
 from Handlers.WorkerHandler import WorkerHandler
 from Handlers.DeveloperHandler import DeveloperHandler
 from Handlers.ManagerHandler import ManagerHandler
+from Migrator import migrator
 
 
 
@@ -182,6 +183,12 @@ def find_managers():
     manager_number_to_search = request.json['valueToSearch'];
     managers = handler.find_by_manager_number(manager_number_to_search);
     return Response(json.dumps(managers), status=200);
+
+@app.route("/api/migrate", methods=['GET'])
+def migrate_data():
+    migrator.start_migration();
+    return Response(json.dumps({'status': 'OK'}), status=200);
+
 
 
 if __name__ == "__main__":

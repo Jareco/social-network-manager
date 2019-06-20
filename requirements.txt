@@ -2,4 +2,5 @@ Flask
 flask-login
 flask-cors
 mysql-connector
+pymongo
 names

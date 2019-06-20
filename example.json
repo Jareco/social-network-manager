@@ -1,0 +1,62 @@
+// Social network. Othe tables will be referenced, because social network is not often changed. (rarerly acced)
+
+{
+    "_id": 1,
+    "url": "http://example.com",
+    "design": "blue",
+    "name": "example"
+},
+
+// User + profile
+
+{
+    "_id": 1,
+    "firstName": "Vitalii",
+    "lastName": "Romanov",
+    "email": "email@example.com",
+    "socialNetwork": 1,
+    "friends": [2],
+    "profile": {
+        "_id": 1,
+        "name": "Profile Name",
+        "city": "Vienna",
+        "birthdate": "1995-05-20",
+        "telnumber": 665322443,
+        "photos": 5,
+    }
+}
+
+// Worker with type developer
+
+{
+    "_id": 1,
+    "firstName": "Max",
+    "lastName": "Mustermann",
+    "birthdate": "1990-02-21",
+    "pernr": 345,
+    "type": "developer",
+    "developer": {
+        "developernr": 123,
+        "nickname": "jareco",
+        "login": "admin",
+        "password": "password"
+    }
+
+}
+
+// Worker with type manager
+
+{
+    "_id": 2,
+    "firstName": "Maximilian",
+    "lastName": "Huber",
+    "birthdate": "1993-01-22",
+    "perrr": 346,
+    "type": "manager",
+    "manager": {
+        "managerrnr": 123,
+        "email": "manager@manager.com",
+        "telnumber": 34234234
+    }
+
+}

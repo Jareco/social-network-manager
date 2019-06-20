@@ -64,6 +64,39 @@ services:
       - filler
     networks:
       imsenet:
+
+  mongo:
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: imse
+    volumes:
+      - type: bind
+        source: ./data/mongo
+        target: /data/db
+    ports:
+      - target: 27017
+        published: 27017
+        protocol: tcp
+    networks:
+      imsenet:
+
+  # utilities
+  mongo-express:
+    image: mongo-express
+    depends_on:
+      - mongo
+    ports:
+      - target: 8081
+        published: 8081
+        protocol: tcp
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+      ME_CONFIG_MONGODB_ADMINPASSWORD: imse
+      ME_CONFIG_MONGODB_ENABLE_ADMIN: "true"
+      ME_CONFIG_MONGODB_SERVER: "mongo"
+    networks:
+      imsenet:
         
 networks:
   imsenet:
